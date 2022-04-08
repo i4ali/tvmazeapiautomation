@@ -1,0 +1,56 @@
+test_name: Make sure server saves and returns a number correctly
+
+marks:
+  - usefixtures:
+      - clean_numbers_table
+
+stages:
+  - name: login
+    request:
+      url: http://localhost:5000/login
+      json:
+        user: "{tavern.env_vars.USER:s}"
+        password: "{tavern.env_vars.PASSWORD:s}"
+      method: POST
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+      headers:
+        content-type: application/json
+      save:
+        json:
+          test_login_token: token
+
+  - name: post a number
+    request:
+      url: http://localhost:5000/numbers
+      json:
+        name: smallnumber
+        number: 123
+      method: POST
+      headers:
+        content-type: application/json
+        Authorization: "bearer {test_login_token:s}"
+    response:
+      status_code: 201
+      json:
+        {}
+      headers:
+        content-type: application/json
+
+  - name: Make sure its in the db
+    request:
+      url: http://localhost:5000/numbers
+      params:
+        name: smallnumber
+      method: GET
+      headers:
+        content-type: application/json
+        Authorization: "bearer {test_login_token:s}"
+    response:
+      status_code: 200
+      json:
+        number: 123
+      headers:
+        content-type: application/json

@@ -1,0 +1,25 @@
+# Test Case 4
+
+# Pagination is an important element, especially for content-heavy
+# websites and applications. This process divides content and present in a limited and best possible manner
+
+test_name: pagination limit for endpoint shows is honored
+
+includes:
+  - !include common.yaml
+
+marks:
+  - usefixtures:
+      - time_request
+  - pagination
+
+stages:
+  - name: get the link for the show
+    request:
+      url: "{tv_maze.url:s}/shows"
+      method: GET
+    response:
+      status_code: 200
+      verify_response_with:
+        function: utilities.utils:pagination_works
+    delay_after: !float "{tv_maze.delay_between_stages}"

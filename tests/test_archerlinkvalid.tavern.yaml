@@ -1,0 +1,27 @@
+# Test Case 2
+
+test_name: show archer has a valid url link embedded in the response
+
+includes:
+  - !include common.yaml
+
+marks:
+  - singlesearch
+
+stages:
+  - name: get the link for the show
+    request:
+      url: "{tv_maze.url:s}/singlesearch/shows?q=archer"
+      method: GET
+    response:
+      status_code: 200
+      save:
+        json:
+          archer_url: url
+
+  - name: verify the link is up
+    request:
+      url: "{archer_url:s}"
+    response:
+      status_code: 200
+

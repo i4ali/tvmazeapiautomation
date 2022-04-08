@@ -1,0 +1,19 @@
+# Test Case 1
+
+test_name: show archer is scheduled on wednesday
+
+includes:
+  - !include common.yaml
+
+marks:
+  - singlesearch
+
+stages:
+  - name: make sure show archer is scheduled on wednesday
+    request:
+      url: "{tv_maze.url:s}/singlesearch/shows?q=archer"
+      method: GET
+    response:
+      status_code: 200
+      verify_response_with:
+        function: utilities.utils:scheduled_on_wednesday

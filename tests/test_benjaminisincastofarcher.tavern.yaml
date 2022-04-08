@@ -1,0 +1,33 @@
+# Test Case 3
+
+test_name: Benjamin is in cast for the show archer
+
+includes:
+  - !include common.yaml
+
+marks:
+  - singlesearch
+  - cast
+
+stages:
+  - name: get the show id for archer
+    request:
+      url: "{tv_maze.url:s}/singlesearch/shows"
+      method: GET
+      params:
+        q: archer
+    response:
+      status_code: 200
+      save:
+        json:
+          show_id: id
+
+
+  - name: verify that Benjamin is in cast of show archer
+    request:
+      url: "{tv_maze.url:s}/shows/{show_id}/cast"
+    response:
+      status_code: 200
+      verify_response_with:
+        function: utilities.utils:benjamin_in_show_archer
+

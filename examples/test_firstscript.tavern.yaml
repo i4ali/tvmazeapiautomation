@@ -1,0 +1,9 @@
+test_name: our first tavern test
+
+stages:
+  - name: make sure status code is 200 for search endpoint
+    request:
+      url: http://api.tvmaze.com/search/shows?q=girls
+      method: GET
+    response:
+      status_code: 200

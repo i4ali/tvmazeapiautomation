@@ -1,0 +1,3 @@
+04/08/2022 03:27:51PM - tests/test_paginationshows.tavern.yaml::pagination limit for endpoint shows is honored (teardown) - DEBUG: Test took 2.3901262283325195 seconds
+04/08/2022 03:28:20PM - tests/test_paginationshows.tavern.yaml::pagination limit for endpoint shows is honored (teardown) - DEBUG: Test took 2.4113829135894775 seconds
+04/08/2022 03:28:40PM - tests/test_paginationshows.tavern.yaml::pagination limit for endpoint shows is honored (teardown) - DEBUG: Test took 2.3860280513763428 seconds

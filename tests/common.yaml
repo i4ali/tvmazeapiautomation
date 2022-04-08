@@ -1,0 +1,7 @@
+name: global configuration
+description: all the confguration for the test project
+
+variables:
+  tv_maze:
+    url: http://api.tvmaze.com
+    delay_between_stages: 1
