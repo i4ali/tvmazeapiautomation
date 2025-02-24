@@ -1,0 +1,46 @@
+---
+test_name: "Data-Driven Tests - Number"
+marks:
+  - parametrize:
+      key:
+        - input
+        - output
+      vals:
+        - [2, 4]
+        - [4, 16]
+        - [8, 64]
+
+stages:
+  - name: "test /square endpoint"
+    request:
+      url: "http://127.0.0.1:5000/square"
+      method: POST
+      json:
+        a: "{input}"
+    response:
+      status_code: 200
+      json:
+        result: !float "{output}"
+
+
+---
+test_name: "Data-Driven Tests - String"
+marks:
+  - parametrize:
+      key:
+        - input
+        - output
+      vals:
+        - ["hello", "olleh"]
+
+stages:
+  - name: "test /reverse endpoint"
+    request:
+      url: "http://127.0.0.1:5000/reverse"
+      method: POST
+      json:
+        s: "{input}"
+    response:
+      status_code: 200
+      json:
+        result: "{output}"
