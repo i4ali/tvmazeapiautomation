@@ -1,0 +1,36 @@
+# test_strictkey.tavern.yaml
+---
+test_name: Strict Key Checking Demonstration
+
+stages:
+  - name: Unspecified Strict check with full response (should pass)
+    request:
+      url: "http://127.0.0.1:5000/user?minimal=false"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        id: 1
+        name: "Alice"
+
+#  - name: Strict check with minimal response (should pass)
+#    request:
+#      url: "http://127.0.0.1:5000/user?minimal=true"
+#      method: GET
+#    response:
+#      status_code: 200
+#      json:
+#        id: 1
+#        name: "Alice"
+#      strict: true  # Only check for specified keys
+#
+#  - name: Non-strict check with full response (should pass)
+#    request:
+#      url: "http://127.0.0.1:5000/user?minimal=false"
+#      method: GET
+#    response:
+#      status_code: 200
+#      json:
+#        id: 1
+#        name: "Alice"
+#      strict: false  # Allow additional keys
