@@ -1,0 +1,21 @@
+test_name: User workflow with shared stages
+
+includes:
+  - !include shared_stages.yaml
+
+stages:
+  - type: ref
+    id: login
+  - name: get_profile
+    request:
+      url: "{host}/profile"
+      method: GET
+      headers:
+        Authorization: "Bearer {token}"
+    response:
+      status_code: 200
+      json:
+        username: "{username}"
+        email: "test@example.com"
+  - type: ref
+    id: logout
