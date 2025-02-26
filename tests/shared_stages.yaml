@@ -1,0 +1,35 @@
+---
+
+name: Authentication stage
+description:
+  Reusable test stage for authentication
+
+variables:
+  host: "http://127.0.0.1:5000"  # Point to local Flask server
+  username: "test_user"
+  password: "secure_password"
+
+stages:
+  - id: login
+    name: login and acquire token
+    request:
+      url: "{host}/auth"
+      method: POST
+      json:
+        username: "{username}"
+        password: "{password}"
+    response:
+      status_code: 200
+      save:
+        json:
+          token: access_token
+
+  - id: logout
+    name: logout and discard token
+    request:
+      url: "{host}/auth/logout"
+      method: POST
+      headers:
+        Authorization: "Bearer {token}"
+    response:
+      status_code: 204
