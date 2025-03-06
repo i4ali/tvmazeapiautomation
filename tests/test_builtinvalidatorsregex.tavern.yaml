@@ -1,0 +1,20 @@
+# test_regex_validators.tavern.yaml
+---
+test_name: Test regex validators
+
+stages:
+  - name: Get user data and validate with regex patterns
+    request:
+      url: http://127.0.0.1:5000/api/user/testuser
+      method: GET
+    response:
+      status_code: 200
+      json:
+        # uuid format
+        id: !re_match "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}"
+
+        # Username format validation
+        username: !re_match "testuser"
+
+        # Email format validation (double-escaped backslashes)
+        email: !re_match "[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z]+"

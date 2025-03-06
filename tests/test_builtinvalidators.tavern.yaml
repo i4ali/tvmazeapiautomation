@@ -1,0 +1,21 @@
+# test_type_validators.tavern.yaml
+---
+test_name: Test type validators
+
+stages:
+  - name: Get various data types
+    request:
+      url: http://127.0.0.1:5000/api/types
+      method: GET
+    response:
+      status_code: 200
+      json:
+        # Type validators check that a value exists and is of expected type
+        integer_value: !anyint
+        string_value: !anystr
+        boolean_value: !anybool
+        float_value: !anyfloat
+        array_value: !anylist
+        object_value: !anydict
+        # Optional check for null values
+        null_value: null
