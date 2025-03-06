@@ -19,3 +19,37 @@ stages:
         object_value: !anydict
         # Optional check for null values
         null_value: null
+
+
+---
+test_name: Test users endpoint with pykwalify validation
+
+stages:
+  - name: Get users and validate structure
+    request:
+      url: http://127.0.0.1:5000/api/users
+      method: GET
+    response:
+      status_code: 200
+      verify_response_with:
+        function: tavern.helpers:validate_pykwalify
+        extra_kwargs:
+          schema:
+            type: map
+            mapping:
+              users:
+                type: seq
+                sequence:
+                  - type: map
+                    mapping:
+                      id:
+                        type: int
+                      name:
+                        type: str
+                      email:
+                        type: str
+                        pattern: "[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z]+"
+                      roles:
+                        type: seq
+                        sequence:
+                          - type: str

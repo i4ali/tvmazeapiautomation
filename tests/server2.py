@@ -44,5 +44,24 @@ def get_user(username):
         ]
     })
 
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    # Return a sample list of users
+    users = [
+        {
+            "id": 1,
+            "name": "Alice",
+            "email": "alice@example.com",
+            "roles": ["admin", "user"]
+        },
+        {
+            "id": 2,
+            "name": "Bob",
+            "email": "bob@example.com",
+            "roles": ["user"]
+        }
+    ]
+    return jsonify({"users": users})
+
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5000)

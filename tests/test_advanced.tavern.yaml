@@ -1,0 +1,59 @@
+# test_basic.tavern.yaml
+# Basic tests to verify API accessibility and core functionality
+---
+test_name: Basic TVMaze API Tests
+includes:
+  - !include common.yaml
+
+stages:
+#  - name: Check if the API base URL is accessible
+#    request:
+#      url: "{tv_maze.url:s}"
+#      method: GET
+#    response:
+#      status_code: 200
+
+#  - name: Verify TVMaze API documentation redirects properly
+#    request:
+#      url: "{tv_maze.url}/api"
+#      method: GET
+#    response:
+#      status_code: 301  # Should redirect to documentation site
+#      headers:
+#        location: !anything
+
+  - name: Check if shows endpoint is working
+    request:
+      url: "{tv_maze.url}/shows"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        - id: !anyint
+          name: !anystr
+          type: !anystr
+          language: !anystr
+      verify_response_with:
+        function: tavern.helpers:validate_pykwalify
+        extra_kwargs:
+          schema:
+            type: seq
+            sequence:
+              - type: map
+                mapping:
+                  id:
+                    type: int
+                  name:
+                    type: str
+                  url:
+                    type: str
+                  type:
+                    type: str
+                  language:
+                    type: str
+                  status:
+                    type: str
+                  genres:
+                    type: seq
+                    sequence:
+                      - type: str

@@ -18,3 +18,34 @@ stages:
 
         # Email format validation (double-escaped backslashes)
         email: !re_match "[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z]+"
+
+---
+test_name: Test regex validators using helper function
+
+stages:
+  - name: Get user data and validate with regex patterns
+    request:
+      url: http://127.0.0.1:5000/api/user/testuser
+      method: GET
+    response:
+      status_code: 200
+      json:
+        # uuid format
+        id: !anystr
+        # Username format validation
+        username: !anystr
+        # Email format validation (double-escaped backslashes)
+        email: !anystr
+      save:
+        username_validation:
+          $ext:
+            function: tavern.helpers:validate_regex
+            extra_kwargs:
+              expression: "testuser"
+              in_jmespath: "username"
+        email_validation:
+          $ext:
+            function: tavern.helpers:validate_regex
+            extra_kwargs:
+              expression: "[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z]+"
+              in_jmespath: "email"
