@@ -1,0 +1,49 @@
+---
+test_name: TVMaze API SQL Injection Test
+
+# Define variables for the test
+includes:
+  - !include common_security.yaml
+
+stages:
+  # Stage 1: Baseline - Normal search request to establish expected behavior
+  - name: Normal search request
+    request:
+      url: "{base_url}/search/shows"
+      method: GET
+      params:
+        q: "{normal_query}"
+      headers:
+        Accept: application/json
+    response:
+      status_code: 200
+      verify_response_with:
+        function: tavern.helpers:validate_content
+        extra_kwargs:
+          comparisons:
+            - jmespath: "length(@)"
+              operator: "gt"
+              expected: 0
+            - jmespath: "[0].show.name"
+              operator: "eq"
+              expected: "Breaking Bad"
+
+
+#   Stage 2: Test with SQL injection pattern 1
+  - name: SQL injection attempt - OR condition
+    request:
+      url: "{base_url}/search/shows"
+      method: GET
+      params:
+        q: "{sql_injection_query}"
+      headers:
+        Accept: application/json
+    response:
+      status_code: 200
+      verify_response_with:
+        function: tavern.helpers:validate_content
+        extra_kwargs:
+          comparisons:
+            - jmespath: "length(@)"
+              operator: "eq"
+              expected: 1

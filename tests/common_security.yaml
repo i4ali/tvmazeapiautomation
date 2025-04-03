@@ -1,0 +1,8 @@
+name: global configuration
+description: all the confguration for the test project
+
+variables:
+  base_url: http://api.tvmaze.com
+  normal_query: "Breaking Bad"
+  # Common SQL injection patterns
+  sql_injection_query: "' OR '1'='1"

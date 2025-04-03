@@ -1,0 +1,12 @@
+SQL Injection Explained: The ' OR '1'='1 Attack
+SQL injection query ' OR '1'='1 is one of the most classic database attack techniques in cybersecurity. Let me explain exactly how it works and why it can be so dangerous.
+How SQL Queries Are Normally Structured
+When an application searches a database, it typically constructs a SQL query like this:
+sqlCopySELECT * FROM shows WHERE name LIKE '%Breaking Bad%'
+This query looks for TV shows with "Breaking Bad" in their name. The % symbols are wildcards that match any characters before or after the search term.
+What Happens During The Injection
+When we send the payload ' OR '1'='1, here's what happens in a vulnerable system:
+
+The application takes our input and directly inserts it into the query:
+
+sqlCopySELECT * FROM shows WHERE name LIKE '%' OR '1'='1%'
