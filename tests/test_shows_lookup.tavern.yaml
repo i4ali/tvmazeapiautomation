@@ -1,0 +1,17 @@
+# test_tvmaze_show_lookup.tavern.yaml
+---
+test_name: Test TVMaze Show Lookup Redirect
+description: Verify that the Show Lookup endpoint returns a 301 redirect and follow it to get show data
+
+stages:
+  - name: Check show lookup redirect without following
+    request:
+      url: http://api.tvmaze.com/lookup/shows
+      method: GET
+      params:
+        imdb: "tt0903747"  # IMDB ID for Breaking Bad
+      follow_redirects: false  # Don't automatically follow the redirect
+    response:
+      status_code: 301  # Expect HTTP 301 Moved Permanently
+      headers:
+        location: !anystr  # Verify there's a location header (redirect URL)
